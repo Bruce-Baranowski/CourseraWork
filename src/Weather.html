@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Weather App</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  
+  
+  <script>
+	$(document).ready(function() {
+    $('form').submit(function() {
+		var loc = document.getElementById("city").value;
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+			var resp = request.response;
+			   document.getElementById("results").innerHTML = 
+					"<p>Location: "+loc+"</p>" +
+					"<p>Temp: "+resp.main.temp+" F</p>";
+			}
+		};
+		request.responseType = 'json';
+		request.open("GET", "http://api.openweathermap.org/data/2.5/weather?q="+loc+"&units=imperial&APPID=bb184fa168227d3d389768778d321e65");
+		request.send()
+        return false;
+    });
+	});
+  </script>
+  
+  
+  </head>
+  
+  <body>
+    <form id="form">
+      <label for="cityinput">City:</label>
+	  <input type="text" id='city' value=""/>
+      <button action="submit">Submit Query</button>
+    </form>
+	
+
+    <div id="results"></div>
+	
+  </body>
+  
+</html>
